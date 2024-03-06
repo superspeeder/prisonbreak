@@ -169,6 +169,93 @@
         "preloadAsSound": false,
         "preloadInCache": false,
         "userAdded": true
+      },
+      {
+        "file": "assets/Kenney Rocket Square.ttf",
+        "kind": "font",
+        "metadata": "",
+        "name": "230dad49e1cb1d076ffee25fbe334f5f9921aea9d4364d60196d4c03191fbe86_Kenney Rocket Square.ttf",
+        "userAdded": true,
+        "origin": {
+          "identifier": "https://asset-resources.gdevelop.io/public-resources/Kenney Font Pack/230dad49e1cb1d076ffee25fbe334f5f9921aea9d4364d60196d4c03191fbe86_Kenney Rocket Square.ttf",
+          "name": "gdevelop-asset-store"
+        }
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "assets/ball.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "assets\\ball.png",
+        "smoothed": false,
+        "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "assets/brick.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "assets\\brick.png",
+        "smoothed": false,
+        "userAdded": true
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "assets/powerup.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "assets\\powerup.png",
+        "smoothed": false,
+        "userAdded": false
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "assets/paddle.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "assets\\paddle.png",
+        "smoothed": false,
+        "userAdded": true
+      },
+      {
+        "file": "assets/game-over-danijel-zambo-main-version-02-03-1394.mp3",
+        "kind": "audio",
+        "metadata": "",
+        "name": "assets\\game-over-danijel-zambo-main-version-02-03-1394.mp3",
+        "preloadAsMusic": false,
+        "preloadAsSound": false,
+        "preloadInCache": false,
+        "userAdded": true
+      },
+      {
+        "file": "assets/Game_Over.wav",
+        "kind": "audio",
+        "metadata": "",
+        "name": "assets\\Game_Over.wav",
+        "preloadAsMusic": false,
+        "preloadAsSound": false,
+        "preloadInCache": false,
+        "userAdded": true
+      },
+      {
+        "file": "assets/BrickHit.wav",
+        "kind": "audio",
+        "metadata": "",
+        "name": "assets\\BrickHit.wav",
+        "preloadAsMusic": false,
+        "preloadAsSound": false,
+        "preloadInCache": false,
+        "userAdded": false
+      },
+      {
+        "file": "assets/GameStart.wav",
+        "kind": "audio",
+        "metadata": "",
+        "name": "assets\\GameStart.wav",
+        "preloadAsMusic": false,
+        "preloadAsSound": false,
+        "preloadInCache": false,
+        "userAdded": false
       }
     ],
     "resourceFolders": []
@@ -183,8 +270,8 @@
     {
       "b": 31,
       "disableInputWhenNotFocused": true,
-      "mangledName": "Untitled_32scene",
-      "name": "Untitled scene",
+      "mangledName": "Game",
+      "name": "Game",
       "r": 59,
       "standardSortMethod": true,
       "stopSoundsOnStartup": true,
@@ -2633,7 +2720,7 @@
                   "sprites": [
                     {
                       "hasCustomCollisionMask": true,
-                      "image": "ball.png",
+                      "image": "assets\\ball.png",
                       "points": [],
                       "originPoint": {
                         "name": "origine",
@@ -2693,7 +2780,7 @@
                   "sprites": [
                     {
                       "hasCustomCollisionMask": true,
-                      "image": "brick.png",
+                      "image": "assets\\brick.png",
                       "points": [],
                       "originPoint": {
                         "name": "origine",
@@ -2753,7 +2840,7 @@
                   "sprites": [
                     {
                       "hasCustomCollisionMask": true,
-                      "image": "powerup.png",
+                      "image": "assets\\powerup.png",
                       "points": [],
                       "originPoint": {
                         "name": "origine",
@@ -2800,7 +2887,7 @@
           "leftMargin": 3,
           "name": "Paddle",
           "rightMargin": 3,
-          "texture": "paddle.png",
+          "texture": "assets\\paddle.png",
           "tiled": false,
           "topMargin": 0,
           "type": "PanelSpriteObject::PanelSprite",
@@ -2906,7 +2993,7 @@
               },
               "parameters": [
                 "",
-                "GameStart.wav",
+                "assets\\GameStart.wav",
                 "",
                 "",
                 ""
@@ -2925,13 +3012,14 @@
             },
             {
               "type": {
-                "value": "PlaySound"
+                "value": "PlaySoundCanal"
               },
               "parameters": [
                 "",
-                "game-over-danijel-zambo-main-version-02-03-1393.mp3",
+                "assets\\game-over-danijel-zambo-main-version-02-03-1394.mp3",
+                "1",
                 "yes",
-                "50",
+                "25",
                 ""
               ]
             }
@@ -3239,7 +3327,7 @@
                     "value": "Wait"
                   },
                   "parameters": [
-                    "2"
+                    "1"
                   ]
                 },
                 {
@@ -3290,13 +3378,32 @@
               "actions": [
                 {
                   "type": {
+                    "value": "StopSoundCanal"
+                  },
+                  "parameters": [
+                    "",
+                    "1"
+                  ]
+                },
+                {
+                  "type": {
                     "value": "PlaySound"
                   },
                   "parameters": [
                     "",
-                    "Game_Over.wav",
+                    "assets\\Game_Over.wav",
                     "",
                     "",
+                    ""
+                  ]
+                },
+                {
+                  "type": {
+                    "value": "Scene"
+                  },
+                  "parameters": [
+                    "",
+                    "\"Game Over\"",
                     ""
                   ]
                 }
@@ -3361,7 +3468,7 @@
               },
               "parameters": [
                 "",
-                "BrickHit.wav",
+                "assets\\BrickHit.wav",
                 "",
                 "",
                 ""
@@ -3505,6 +3612,166 @@
         {
           "name": "Resizable",
           "type": "ResizableCapability::ResizableBehavior"
+        },
+        {
+          "name": "Scale",
+          "type": "ScalableCapability::ScalableBehavior"
+        },
+        {
+          "name": "Text",
+          "type": "TextContainerCapability::TextContainerBehavior"
+        }
+      ]
+    },
+    {
+      "b": 31,
+      "disableInputWhenNotFocused": true,
+      "mangledName": "Game_32Over",
+      "name": "Game Over",
+      "r": 59,
+      "standardSortMethod": true,
+      "stopSoundsOnStartup": true,
+      "title": "",
+      "v": 48,
+      "uiSettings": {
+        "grid": false,
+        "gridType": "rectangular",
+        "gridWidth": 32,
+        "gridHeight": 32,
+        "gridOffsetX": 0,
+        "gridOffsetY": 0,
+        "gridColor": 10401023,
+        "gridAlpha": 0.8,
+        "snap": false,
+        "zoomFactor": 2.1875,
+        "windowMask": false
+      },
+      "objectsGroups": [],
+      "variables": [],
+      "instances": [
+        {
+          "angle": 0,
+          "customSize": true,
+          "depth": 1,
+          "height": 101,
+          "layer": "",
+          "name": "Game_Over_MSG",
+          "persistentUuid": "d5d96294-26e5-49dc-97d2-1ea62c311b62",
+          "width": 219,
+          "x": 45,
+          "y": 34,
+          "zOrder": 1,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        }
+      ],
+      "objects": [
+        {
+          "assetStoreId": "",
+          "bold": false,
+          "italic": false,
+          "name": "Game_Over_MSG",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "effects": [],
+          "behaviors": [],
+          "string": "Game \nOver",
+          "font": "230dad49e1cb1d076ffee25fbe334f5f9921aea9d4364d60196d4c03191fbe86_Kenney Rocket Square.ttf",
+          "textAlignment": "left",
+          "characterSize": 50,
+          "color": {
+            "b": 0,
+            "g": 0,
+            "r": 0
+          },
+          "content": {
+            "bold": false,
+            "isOutlineEnabled": false,
+            "isShadowEnabled": false,
+            "italic": false,
+            "outlineColor": "255;255;255",
+            "outlineThickness": 2,
+            "shadowAngle": 90,
+            "shadowBlurRadius": 2,
+            "shadowColor": "0;0;0",
+            "shadowDistance": 4,
+            "shadowOpacity": 127,
+            "smoothed": true,
+            "underlined": false,
+            "text": "Game \nOver",
+            "font": "230dad49e1cb1d076ffee25fbe334f5f9921aea9d4364d60196d4c03191fbe86_Kenney Rocket Square.ttf",
+            "textAlignment": "left",
+            "characterSize": 50,
+            "color": "0;0;0"
+          }
+        }
+      ],
+      "objectsFolderStructure": {
+        "folderName": "__ROOT",
+        "children": [
+          {
+            "objectName": "Game_Over_MSG"
+          }
+        ]
+      },
+      "events": [],
+      "layers": [
+        {
+          "ambientLightColorB": 200,
+          "ambientLightColorG": 200,
+          "ambientLightColorR": 200,
+          "camera3DFarPlaneDistance": 10000,
+          "camera3DFieldOfView": 45,
+          "camera3DNearPlaneDistance": 3,
+          "cameraType": "",
+          "followBaseLayerCamera": false,
+          "isLightingLayer": false,
+          "isLocked": false,
+          "name": "",
+          "renderingType": "",
+          "visibility": true,
+          "cameras": [
+            {
+              "defaultSize": true,
+              "defaultViewport": true,
+              "height": 0,
+              "viewportBottom": 1,
+              "viewportLeft": 0,
+              "viewportRight": 1,
+              "viewportTop": 0,
+              "width": 0
+            }
+          ],
+          "effects": [
+            {
+              "effectType": "Scene3D::HemisphereLight",
+              "name": "3D Light",
+              "doubleParameters": {
+                "elevation": 45,
+                "intensity": 1,
+                "rotation": 0
+              },
+              "stringParameters": {
+                "groundColor": "64;64;64",
+                "skyColor": "255;255;255",
+                "top": "Y-"
+              },
+              "booleanParameters": {}
+            }
+          ]
+        }
+      ],
+      "behaviorsSharedData": [
+        {
+          "name": "Effect",
+          "type": "EffectCapability::EffectBehavior"
+        },
+        {
+          "name": "Opacity",
+          "type": "OpacityCapability::OpacityBehavior"
         },
         {
           "name": "Scale",
