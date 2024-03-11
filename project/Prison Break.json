@@ -354,13 +354,32 @@
     "folderName": "__ROOT"
   },
   "objectsGroups": [],
-  "variables": [],
+  "variables": [
+    {
+      "folded": true,
+      "name": "PowerUpFallSpeed",
+      "type": "number",
+      "value": 160
+    },
+    {
+      "folded": true,
+      "name": "ExtraBallPowerupBonus",
+      "type": "number",
+      "value": 3
+    },
+    {
+      "folded": true,
+      "name": "SlowPowerupSpeedFactor",
+      "type": "number",
+      "value": 0.6
+    }
+  ],
   "layouts": [
     {
       "b": 31,
       "disableInputWhenNotFocused": true,
-      "mangledName": "Game",
-      "name": "Game",
+      "mangledName": "Level1",
+      "name": "Level1",
       "r": 59,
       "standardSortMethod": true,
       "stopSoundsOnStartup": true,
@@ -376,11 +395,18 @@
         "gridColor": 10401023,
         "gridAlpha": 0.8,
         "snap": false,
-        "zoomFactor": 0.511778403521019,
+        "zoomFactor": 0.8416428125373131,
         "windowMask": false
       },
       "objectsGroups": [],
-      "variables": [],
+      "variables": [
+        {
+          "folded": true,
+          "name": "PowerUpChance",
+          "type": "number",
+          "value": 0.6
+        }
+      ],
       "instances": [
         {
           "angle": 0,
@@ -407,8 +433,8 @@
           "name": "Ball",
           "persistentUuid": "11428e54-4dd1-4aaf-b21d-5f0c406be2c8",
           "width": 16,
-          "x": 472,
-          "y": 620,
+          "x": 437,
+          "y": 456,
           "zOrder": 2,
           "numberProperties": [],
           "stringProperties": [],
@@ -1710,6 +1736,18 @@
               "name": "BaseSpeed",
               "type": "number",
               "value": 480
+            },
+            {
+              "folded": true,
+              "name": "IsSlowed",
+              "type": "boolean",
+              "value": false
+            },
+            {
+              "folded": true,
+              "name": "IsPaused",
+              "type": "boolean",
+              "value": false
             }
           ],
           "effects": [],
@@ -1771,7 +1809,14 @@
           "name": "Brick",
           "type": "Sprite",
           "updateIfNotVisible": false,
-          "variables": [],
+          "variables": [
+            {
+              "folded": true,
+              "name": "Health",
+              "type": "number",
+              "value": 1
+            }
+          ],
           "effects": [],
           "behaviors": [],
           "animations": [
@@ -1831,7 +1876,14 @@
           "name": "PowerUp",
           "type": "Sprite",
           "updateIfNotVisible": false,
-          "variables": [],
+          "variables": [
+            {
+              "folded": true,
+              "name": "PowerUpType",
+              "type": "number",
+              "value": 0
+            }
+          ],
           "effects": [],
           "behaviors": [],
           "animations": [
@@ -2043,7 +2095,18 @@
         },
         {
           "type": "BuiltinCommonInstructions::Standard",
-          "conditions": [],
+          "conditions": [
+            {
+              "type": {
+                "value": "ObjectVariableAsBoolean"
+              },
+              "parameters": [
+                "Ball",
+                "IsPaused",
+                ""
+              ]
+            }
+          ],
           "actions": [
             {
               "type": {
@@ -2056,13 +2119,7 @@
                 "+",
                 "Ball.Speed * TimeDelta() * sin(Ball.Direction)"
               ]
-            }
-          ]
-        },
-        {
-          "type": "BuiltinCommonInstructions::Standard",
-          "conditions": [],
-          "actions": [
+            },
             {
               "type": {
                 "value": "TextContainerCapability::TextContainerBehavior::SetValue"
@@ -2072,6 +2129,16 @@
                 "Text",
                 "=",
                 "\"Balls: \" + ToString(Ball.Variable(BallsRemaining))"
+              ]
+            },
+            {
+              "type": {
+                "value": "MettreY"
+              },
+              "parameters": [
+                "PowerUp",
+                "+",
+                "GlobalVariable(PowerUpFallSpeed)*TimeDelta()"
               ]
             }
           ]
@@ -2111,7 +2178,7 @@
                 "Ball",
                 "Direction",
                 "=",
-                "(max(min((Ball.X() - Paddle.CenterX()) / Paddle.Width(), 1.0), -1.0) - 0.5) / 2 * Pi() - Pi() / 4"
+                "max(min((Ball.X() - Paddle.CenterX()) / Paddle.Width(), 1.0), -1.0) / 3 * Pi() - Pi() / 2"
               ]
             }
           ]
@@ -2339,13 +2406,12 @@
                 },
                 {
                   "type": {
-                    "value": "ModVarObjet"
+                    "value": "SetObjectVariableAsBoolean"
                   },
                   "parameters": [
                     "Ball",
-                    "Speed",
-                    "=",
-                    "0"
+                    "IsPaused",
+                    "True"
                   ]
                 },
                 {
@@ -2354,6 +2420,16 @@
                   },
                   "parameters": [
                     "1"
+                  ]
+                },
+                {
+                  "type": {
+                    "value": "SetObjectVariableAsBoolean"
+                  },
+                  "parameters": [
+                    "Ball",
+                    "IsPaused",
+                    "True"
                   ]
                 },
                 {
@@ -2470,15 +2546,6 @@
           "actions": [
             {
               "type": {
-                "value": "Delete"
-              },
-              "parameters": [
-                "Brick",
-                ""
-              ]
-            },
-            {
-              "type": {
                 "value": "ModVarObjet"
               },
               "parameters": [
@@ -2498,6 +2565,17 @@
                 "",
                 "",
                 ""
+              ]
+            },
+            {
+              "type": {
+                "value": "ModVarObjet"
+              },
+              "parameters": [
+                "Brick",
+                "Health",
+                "-",
+                "1"
               ]
             }
           ]
@@ -2535,6 +2613,338 @@
                 "textR": 0
               },
               "comment": "Level Win"
+            }
+          ]
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "VarObjet"
+              },
+              "parameters": [
+                "Brick",
+                "Health",
+                "<=",
+                "0"
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "Delete"
+              },
+              "parameters": [
+                "Brick",
+                ""
+              ]
+            }
+          ],
+          "events": [
+            {
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "value": "BuiltinCommonInstructions::CompareNumbers"
+                  },
+                  "parameters": [
+                    "RandomFloat(1)",
+                    "<=",
+                    "Variable(PowerUpChance)"
+                  ]
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "PowerUp",
+                    "Brick.X()",
+                    "Brick.Y()",
+                    ""
+                  ]
+                },
+                {
+                  "type": {
+                    "value": "ScalableCapability::ScalableBehavior::SetValue"
+                  },
+                  "parameters": [
+                    "PowerUp",
+                    "Scale",
+                    "*",
+                    "3"
+                  ]
+                },
+                {
+                  "type": {
+                    "value": "ModVarObjet"
+                  },
+                  "parameters": [
+                    "PowerUp",
+                    "PowerUpType",
+                    "=",
+                    "RandomInRange(0, 2)"
+                  ]
+                }
+              ],
+              "events": [
+                {
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "value": "VarObjet"
+                      },
+                      "parameters": [
+                        "PowerUp",
+                        "PowerUpType",
+                        "=",
+                        "0"
+                      ]
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "value": "ChangeColor"
+                      },
+                      "parameters": [
+                        "PowerUp",
+                        "\"255;255;255\""
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "value": "VarObjet"
+                      },
+                      "parameters": [
+                        "PowerUp",
+                        "PowerUpType",
+                        "=",
+                        "1"
+                      ]
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "value": "ChangeColor"
+                      },
+                      "parameters": [
+                        "PowerUp",
+                        "\"3;248;255\""
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "value": "VarObjet"
+                      },
+                      "parameters": [
+                        "PowerUp",
+                        "PowerUpType",
+                        "=",
+                        "2"
+                      ]
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "value": "ChangeColor"
+                      },
+                      "parameters": [
+                        "PowerUp",
+                        "\"255;50;50\""
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "CollisionNP"
+              },
+              "parameters": [
+                "PowerUp",
+                "Paddle",
+                "",
+                "",
+                ""
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "Delete"
+              },
+              "parameters": [
+                "PowerUp",
+                ""
+              ]
+            }
+          ],
+          "events": [
+            {
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "value": "VarObjet"
+                  },
+                  "parameters": [
+                    "PowerUp",
+                    "PowerUpType",
+                    "=",
+                    "0"
+                  ]
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "value": "ModVarObjet"
+                  },
+                  "parameters": [
+                    "Ball",
+                    "BallsRemaining",
+                    "+",
+                    "GlobalVariable(ExtraBallPowerupBonus)"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "value": "VarObjet"
+                  },
+                  "parameters": [
+                    "PowerUp",
+                    "PowerUpType",
+                    "=",
+                    "1"
+                  ]
+                }
+              ],
+              "actions": []
+            },
+            {
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "value": "VarObjet"
+                  },
+                  "parameters": [
+                    "PowerUp",
+                    "PowerUpType",
+                    "=",
+                    "2"
+                  ]
+                }
+              ],
+              "actions": []
+            }
+          ]
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "ObjectVariableAsBoolean"
+              },
+              "parameters": [
+                "Ball",
+                "IsSlowed",
+                "True"
+              ]
+            },
+            {
+              "type": {
+                "value": "ObjectVariableAsBoolean"
+              },
+              "parameters": [
+                "Ball",
+                "IsPaused",
+                ""
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "ModVarObjet"
+              },
+              "parameters": [
+                "Ball",
+                "Speed",
+                "=",
+                "Ball.BaseSpeed * GlobalVariable(SlowPowerupSpeedFactor)"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "ObjectVariableAsBoolean"
+              },
+              "parameters": [
+                "Ball",
+                "IsSlowed",
+                "False"
+              ]
+            },
+            {
+              "type": {
+                "value": "ObjectVariableAsBoolean"
+              },
+              "parameters": [
+                "Ball",
+                "IsPaused",
+                ""
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "ModVarObjet"
+              },
+              "parameters": [
+                "Ball",
+                "Speed",
+                "=",
+                "Ball.BaseSpeed"
+              ]
             }
           ]
         }
@@ -5686,13 +6096,13 @@
           "effects": [],
           "behaviors": [
             {
+              "name": "Anchor",
+              "type": "AnchorBehavior::AnchorBehavior",
               "bottomEdgeAnchor": 0,
               "leftEdgeAnchor": 1,
-              "name": "Anchor",
               "relativeToOriginalWindowSize": true,
               "rightEdgeAnchor": 2,
               "topEdgeAnchor": 0,
-              "type": "AnchorBehavior::AnchorBehavior",
               "useLegacyBottomAndRightAnchors": false
             }
           ],
@@ -5828,7 +6238,7 @@
               },
               "parameters": [
                 "",
-                "\"Game\"",
+                "\"Level1\"",
                 ""
               ]
             }
